@@ -1,0 +1,108 @@
+---
+title: "Project 2D Final Draft"
+output: html_notebook
+---
+
+#Introduction
+
+Scientific Question: How do changing levels of FGF2 affect the stimulation/activation of Ras-ERK and PLC pathways in which cancer development is possible?
+
+FGF2, also known as fibroblast growth factor 2, is a growth factor and signaling protein. FGF2 participates in a variety of biological mechanisms such as cellular proliferation, differentiation, and migration (Pursiheimo 2014). Growth factors assist and signal the initation of a signal transduction cascade that ultimately begins cellular proliferation. For instance, FGF2 is known to bind to an FGFR (receptor) to initiate the signaling pathways of PLC and MAPK-ERK. Through these signal transduction pathways, kinases phosphorylate secondary messengers which result in the activation and binding of transcription factors to start gene expression of specific proteins involved in cellular proliferation (Mendoza. Et al 2011). If there is an issue in the changing levels of FGF2 present in the cell, uncontrollable cell growth can result. Hence, the early signs of cancer. Therefore, we want to explore how changing levels of FGF2 affect the stimulation of these signal transduction pathways and ultimately the expression of cancer. 
+
+Scientific Hypothesis: 
+If FGF22 levels exceed maximum gene expression levels for the activation of the Ras-ERK and PLC pathways, then there will be up regulation of the signaling transduction of both the Ras-ERK and PLC pathways resulting in cancer. 
+
+The bioinformatics tools that will be used in this research is RNAseq. The visualization of the results and data collected will be performed via a pie chart. RNAseq will be used to examine the sequences of RNA that are produced when FGF2 levels are high and when they are low. This will help determine a baseline to also convey how much FGF2 is considered "exceeding" normal amounts to result in excess stimulation of the signal transduction pathways. Hence, excess/uncontrolled cellular proliferation, cancer. The data was gathered from Uniprot.
+
+#Loading in Packages
+
+1.) Bioconductor
+This package is a software that facilitates and allows analysis of data from biological assays. Having bioconductor is essential to run the RNAseq of FGF2.
+
+```{r}
+library(BiocManager)
+```
+
+2.) rnaseqGene
+
+This package is a subset of Bioconductor. RNAseq will allow us to run the FGF2 levels data in order to determine how much total cellular content (mRNA) is being transcribed from activating/stimulating the signal transduction pathways. In other words, we can measure the number of copies of RNA in a cell or cells. 
+
+```{r}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("rnaseqGene")
+```
+
+3.) Biostrings
+
+This package will be used for proper manipulation of biological strings. This is necessary for proper and efficient analysis of the code. 
+
+```{r}
+library(Biostrings)
+```
+
+
+4.) Bio3D
+
+This package will be used for analyzing and evaluating the 3D structure of FGF2. A visual representation of much FGF2 is present and if high levels will induce excessive cellular proliferation. 
+
+```{r}
+library(bio3d)
+```
+
+All packages can be installed by googling "_____ package in R" or by searching the package under the package section of R studio then by clicking "install".
+
+5.) tximport
+
+This package will allow us to import the count data into R and collapse the data to a gene level.
+
+```{r}
+library(tximport)
+```
+
+#Performing Bioinformatics Analysis
+
+Data was gathered from Uniprot:
+Read the length to analyze how many sequences are in FGF2.
+
+```{r}
+FGF2_Data <- read.fasta(file = "FGF2.fasta.txt")
+length(FGF2_Data)
+```
+
+Data was downloaded from NIH. https://www.ncbi.nlm.nih.gov/gene?Db=gene&Cmd=DetailsSearch&Term=2247
+
+```{r}
+FGF2_file <- read.fasta(file = "FGF2.txt")
+length(FGF2_file)
+```
+
+```{r}
+Datainfo <- read.fasta(file = "FGF2.txt")
+View(Datainfo)
+Datainfo
+```
+
+```{r}
+rownames(Datainfo) <- Datainfo$run
+```
+
+
+```{r}
+txi <- tximport(files = Datainfo, type="salmon", tx2gene= tx2gene)
+```
+It appears there is an error with the file entry. This issue has not allowed me to progress my project. 
+
+#Plotting The Results
+
+Data analysis method intended to be used is a pie chart in which it examined the different amounts of mRNA transcribed from FGF2 present. With the different amount visualized, the audience can observe how different amounts of FGF2 present contributes to the further activation of the signal transduction pathway and therefore, it's potential contribution to cancer growth.
+
+
+#Analyzing the Results
+
+Apologies in advance for incomplete section. Research and prior literature demonstrates that excess amounts of FGF2 should normally downregulate or negatively feeback to the signal transduction pathways of Ras-ERK and PLC.However, in the instance of cancer development- excessive FGF2 can cause an overwhelming activation of these pathways which further stimulates transcription or growth factors. Hence, the possibility of untrolled cell growth due to overstimulation of the pathways.  
+
+#Code Formatting Requirements
+
+Bioconductor was used to proceed this project. Bioconductor is a special program/software in R that all the analysis and comprehension of genomic data. It facilitates several packages within the software that make it possible to code visualizations and data interpretation. 
